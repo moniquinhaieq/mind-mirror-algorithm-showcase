@@ -29,7 +29,8 @@ const AutomatedInsights: React.FC<AutomatedInsightsProps> = ({ stats }) => {
       `Você demonstrou interesse em ${topAreas.join(' e ')}.`,
       `Detectamos um nível ${engagementLevel} de engajamento com a interface.`,
       `Você parece preferir conteúdo ${stats.hovers.size > stats.clicks ? 'visual' : 'interativo'}.`,
-      `Baseado no seu comportamento, recomendaríamos mais conteúdos sobre ${preferences[0] || 'tecnologia'}.`
+      `Baseado no seu comportamento, recomendaríamos mais conteúdos sobre ${preferences[0] || 'tecnologia'}.`,
+      `Os dados de navegação como cookies e cliques permitem personalizar o conteúdo especificamente para seu perfil.`
     ];
     
     // Pick a random insight

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { InteractionEvent, InteractionStats } from '@/hooks/useInteractionTracking';
 import { formatTimeSpent, calculateEngagementScore, getMostInteractedElements, analyzePreferences, generateInsights } from '@/utils/analyticsUtils';
@@ -6,6 +5,8 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import InteractionTimeline from './InteractionTimeline';
 import AutomatedInsights from './AutomatedInsights';
+import CookieMonitor from './CookieMonitor';
+import { useCookieTracking } from '@/hooks/useCookieTracking';
 
 interface AnalyticsPanelProps {
   events: InteractionEvent[];
@@ -21,6 +22,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ events, stats, onShowEx
   const insight = generateInsights(stats);
   
   const shouldShowReportButton = stats.clicks >= 5 || stats.timeSpent >= 60;
+  
+  // Cookie tracking
+  const { cookies, cookiesPermission, requestCookiesPermission } = useCookieTracking();
   
   return (
     <div className="analytics-panel h-full overflow-y-auto p-4 flex flex-col">
@@ -53,6 +57,13 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ events, stats, onShowEx
           </div>
         </div>
         
+        {/* Cookie Monitor - NEW */}
+        <CookieMonitor 
+          cookies={cookies}
+          cookiesPermission={cookiesPermission}
+          requestPermission={requestCookiesPermission}
+        />
+        
         {/* Engagement score */}
         <div className="bg-analytics-accent p-4 rounded-md">
           <div className="flex justify-between mb-2">
@@ -65,7 +76,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ events, stats, onShowEx
           )}
         </div>
         
-        {/* Interaction timeline - NEW */}
+        {/* Interaction timeline */}
         <div>
           <h3 className="text-sm font-medium mb-2">Linha do Tempo de Interações</h3>
           <InteractionTimeline events={events} limit={4} />
@@ -104,7 +115,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ events, stats, onShowEx
         
         <Separator className="bg-analytics-text/20" />
         
-        {/* Automated insights - NEW */}
+        {/* Automated insights */}
         <AutomatedInsights stats={stats} />
         
         {/* Event log */}
@@ -144,7 +155,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ events, stats, onShowEx
           </p>
         </div>
         
-        {/* Interactive exercises button - NEW */}
+        {/* Interactive exercises button */}
         <div className="mt-2">
           <button
             onClick={onShowExercise}
