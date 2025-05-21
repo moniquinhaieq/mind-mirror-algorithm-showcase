@@ -90,13 +90,13 @@ export const InteractiveElement = ({
         return (
           <div className="flex flex-col items-center justify-center h-full">
             <p className="font-medium">{content}</p>
-            {clicks > 0 && <span className="text-xs mt-2">Clicks: {clicks}</span>}
+            {clicks > 0 && <span className="text-xs mt-2">Cliques: {clicks}</span>}
           </div>
         );
     }
   };
   
-  const style = position ? { 
+  const elementStyle: React.CSSProperties = position ? { 
     position: 'absolute', 
     left: `${position.x}%`, 
     top: `${position.y}%`,
@@ -108,9 +108,10 @@ export const InteractiveElement = ({
       id={id}
       data-trackable="true"
       data-tracking={id}
-      style={style}
+      style={elementStyle}
       className={cn(
         'border-2 rounded-md shadow-md flex items-center justify-center cursor-pointer transition-all duration-300 select-none',
+        'hover:scale-105 hover:shadow-lg', // Added animation effects
         themeClasses[theme],
         sizeClasses[size],
         className

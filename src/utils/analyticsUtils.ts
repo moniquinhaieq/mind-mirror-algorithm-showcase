@@ -71,9 +71,58 @@ export const analyzePreferences = (stats: InteractionStats) => {
     .map(([key]) => key);
 };
 
+// Generate automated insights based on user behavior
+export const generateInsights = (stats: InteractionStats) => {
+  const preferences = analyzePreferences(stats);
+  const insights = [];
+  
+  if (stats.clicks > 5) {
+    insights.push(`Você parece ter interesse em ${preferences[0] || 'conteúdo interativo'}.`);
+  }
+  
+  if (stats.mouseDistance > 1000) {
+    insights.push('Você explora bastante a interface antes de tomar decisões.');
+  } else if (stats.clicks > 0) {
+    insights.push('Você tende a ser direto em suas interações.');
+  }
+  
+  // Add more insights based on hover behavior
+  const hoverTotal = Array.from(stats.hovers.values()).reduce((sum, time) => sum + time, 0);
+  if (hoverTotal > 5000) {
+    insights.push('Você analisa detalhadamente os elementos antes de interagir.');
+  }
+  
+  // Return random insight or default
+  return insights.length > 0 
+    ? insights[Math.floor(Math.random() * insights.length)] 
+    : 'Interaja mais para gerar insights personalizados.';
+};
+
 export const formatTimeSpent = (seconds: number) => {
   if (seconds < 60) return `${seconds}s`;
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${minutes}m ${remainingSeconds}s`;
+};
+
+// Get user activity description
+export const getUserActivityDescription = (stats: InteractionStats) => {
+  const patterns = [];
+  
+  // Clicks pattern
+  if (stats.clicks > 15) patterns.push('interação muito ativa');
+  else if (stats.clicks > 8) patterns.push('interação moderada');
+  else if (stats.clicks > 0) patterns.push('exploração cautelosa');
+  
+  // Mouse movement pattern
+  if (stats.mouseDistance > 3000) patterns.push('movimento intenso do cursor');
+  else if (stats.mouseDistance > 1000) patterns.push('movimento moderado');
+  else patterns.push('movimento mínimo');
+  
+  // Time engagement
+  if (stats.timeSpent > 120) patterns.push('engajamento prolongado');
+  else if (stats.timeSpent > 60) patterns.push('engajamento moderado');
+  else patterns.push('visita breve');
+  
+  return patterns.join(', ');
 };
