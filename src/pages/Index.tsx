@@ -6,6 +6,7 @@ import InteractionArea from '@/components/InteractionArea';
 import WelcomeMessage from '@/components/WelcomeMessage';
 import GuidedExercise from '@/components/GuidedExercise';
 import FinalReport from '@/components/FinalReport';
+import { generateDemoCookies } from '@/utils/demoCoookieGenerator';
 
 const Index = () => {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,11 @@ const Index = () => {
   const [showExercise, setShowExercise] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [reportAutoShown, setReportAutoShown] = useState(false);
+
+  // Generate demo cookies when component mounts
+  useEffect(() => {
+    generateDemoCookies();
+  }, []);
 
   // Auto-show the report after a certain time or interaction level
   useEffect(() => {
