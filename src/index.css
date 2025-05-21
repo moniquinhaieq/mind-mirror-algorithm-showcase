@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -97,5 +91,25 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .analytics-panel {
+    background-color: theme('colors.analytics.background');
+    color: theme('colors.analytics.text');
+  }
+  
+  .interactive-area {
+    background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+  }
+  
+  .data-point {
+    @apply absolute h-2 w-2 rounded-full bg-analytics-highlight;
+  }
+  
+  .data-point::before {
+    content: '';
+    @apply absolute h-full w-full rounded-full bg-analytics-highlight animate-data-ping;
   }
 }
